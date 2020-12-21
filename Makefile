@@ -7,8 +7,9 @@ requirements:
 	pkg upgrade -y
 	pkg install -y expect openvpn python3 wget
 
-#install: requirements fix_permissions
-install: fix_permissions
+all: requirements fix_permissions install
+
+install: 
 	cp ./scripts/rc.d.sh /usr/local/etc/rc.d/transmissionvpn
 	cp /etc/rc.conf ./rc.conf.backup
 	-@service transmission stop
