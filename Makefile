@@ -1,5 +1,5 @@
 
-default: install
+default: all
 
 requirements:
 	pkg update
@@ -9,7 +9,7 @@ requirements:
 
 all: requirements fix_permissions install
 
-install: 
+install:
 	cp ./scripts/rc.d.sh /usr/local/etc/rc.d/transmissionvpn
 	cp /etc/rc.conf ./rc.conf.backup
 	-@service transmission stop
