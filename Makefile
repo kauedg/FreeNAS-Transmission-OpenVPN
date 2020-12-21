@@ -34,15 +34,20 @@ install: fix_permissions
 					sleep 1;\
 	done
 
-	mkdir -p /opt/transmissionvpn
-	@echo "Enter your OpenVPN username and press [ENTER]:" ; \
-		read username ; \
-		echo "Enter your OpenVPN password and press [ENTER]:" ; \
-		read password ; \
-		sed s/USERNAME/$$username/ run.sh.template | sed s/PASSWORD/$$password/ > /opt/transmissionvpn/run.sh
-		chmod +x run.sh
+	mkdir -p /opt/transmissionvpn/
+	mkdir /opt/transmissionvpn/scripts
+	mkdir /opt/transmissionvpn/openvpn
 
+	cp -r scripts/ /opt/transmissionvpn/scripts
 	cp stop.sh /opt/transmissionvpn/
+
+	@echo "Enter your OpenVPN username and press [ENTER]:" ; \
+																	read username ; \
+																	echo "Enter your OpenVPN password and press [ENTER]:" ; \
+																	read password ; \
+																	sed s/USERNAME/$$username/ run.sh.template | sed s/PASSWORD/$$password/ > /opt/transmissionvpn/run.sh
+
+	chmod +x /opt/transmissionvpn/run.sh
 
 
 	@clear

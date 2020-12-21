@@ -1,4 +1,4 @@
-#!/usr/bin/env expect -f
+#!/usr/local/bin/expect -f
 
 spawn /usr/local/sbin/openvpn \
     --cd /opt/transmissionvpn/openvpn \

@@ -6,18 +6,15 @@ name="transmissionvpn"
 start_cmd="${name}_start"
 stop_cmd="${name}_stop"
 
-: ${vpn_dir=/opt/transmissionvpn}
-
 transmissionvpn_start()
 {
-    $transmission_dir/run.sh
+    /opt/transmissionvpn/run.sh
 }
 
 transmissionvpn_stop()
 {
-    $transmission_dir/stop.sh
+    /opt/transmissionvpn/stop.sh
 }
-
 
 load_rc_config $name
 run_rc_command "$1"

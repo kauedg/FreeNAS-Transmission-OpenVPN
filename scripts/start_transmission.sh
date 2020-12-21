@@ -8,6 +8,6 @@ while [ -e '/var/run/transmission/daemon.pid' ]; do
   sleep 1
 done
 
-${PYTHON3} fix_ip.py "/usr/pbi/transmission-amd64/etc/transmission/home/settings.json" "$4"
+${PYTHON3} fix_ip.py "/usr/local/etc/transmission/home/settings.json" "$4"
 
 service transmission start
