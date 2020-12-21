@@ -6,14 +6,16 @@ name="transmissionvpn"
 start_cmd="${name}_start"
 stop_cmd="${name}_stop"
 
+: ${vpn_dir=/opt/transmissionvpn}
+
 transmissionvpn_start()
 {
-    /FreeNAS-Transmission-OpenVPN/run.sh
+    $transmission_dir/run.sh
 }
 
 transmissionvpn_stop()
 {
-    /FreeNAS-Transmission-OpenVPN/stop.sh
+    $transmission_dir/stop.sh
 }
 
 

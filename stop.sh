@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-/usr/local/etc/rc.d/transmission stop
+service transmission stop
+while [ -e '/var/run/transmission/daemon.pid' ]; do
+  sleep 1
+done
+
 pkill openvpn

@@ -1,14 +1,17 @@
-#!/usr/bin/python
+#!/usr/local/bin/python3
 #
 # This script takes two parameters.
-#     fix_ip.py <settings.json> <new ip address> 
+#     fix_ip.py <settings.json> <new ip address>
 
 import json
 import sys
 
 if __name__ == '__main__':
+
+    assert sys.version_info >= (3, 2)
+
     if len(sys.argv) < 3:
-        print 'Usage:\n    fix_ip.py <settings.json> <new ip address>\n'
+        print('Usage:\n    fix_ip.py <settings.json> <new ip address>\n')
         sys.exit(-1)
 
     f = open(sys.argv[1], 'r')

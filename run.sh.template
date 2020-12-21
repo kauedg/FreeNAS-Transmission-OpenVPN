@@ -1,14 +1,14 @@
-#!/usr/local/bin/expect -f
+#!/usr/bin/env expect -f
 
 spawn /usr/local/sbin/openvpn \
-    --cd /FreeNAS-Transmission-OpenVPN/openvpn \
-    --config /FreeNAS-Transmission-OpenVPN/openvpn/openvpn.conf \
-    --up /FreeNAS-Transmission-OpenVPN/scripts/start_transmission.sh \
+    --cd /opt/transmissionvpn/openvpn \
+    --config /opt/transmissionvpn/openvpn/openvpn.conf \
+    --up /opt/transmissionvpn/scripts/start_transmission.sh \
     --script-security 2 \
-    --down /FreeNAS-Transmission-OpenVPN/scripts/stop_transmission.sh \
+    --down /opt/transmissionvpn/scripts/stop_transmission.sh \
     --daemon openvpn \
-    --log-append /FreeNAS-Transmission-OpenVPN/openvpn-running.log \
-    --writepid /FreeNAS-Transmission-OpenVPN/openvpn.pid
+    --log-append /opt/transmissionvpn/openvpn-running.log \
+    --writepid /opt/transmissionvpn/openvpn.pid
 
 expect "Enter Auth Username:" {
     send "USERNAME\n"

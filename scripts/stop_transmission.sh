@@ -1,3 +1,6 @@
 #!/bin/sh
 
-/usr/local/etc/rc.d/transmission stop
+service transmission stop
+while [ -e '/var/run/transmission/daemon.pid' ]; do
+  sleep 1
+done
