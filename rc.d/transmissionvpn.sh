@@ -14,7 +14,8 @@ transmissionvpn_start()
 
 transmissionvpn_stop()
 {
-    /opt/transmissionvpn/stop_vpn.sh
+    service transmission status && service transmission stop
+    #/opt/transmissionvpn/stop_vpn.sh
 }
 
 
