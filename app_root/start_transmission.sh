@@ -18,19 +18,20 @@ while [ "$IP_ADDRESS" == "" ]; do
 done
 
 echo "  > ${IP_ADDRESS}"
-echo ""
 
 if ! [ -f "${TRANSMISSION_CONFIG}" ]; then
   echo "Missing ''${TRANSMISSION_CONFIG}'' file.";
   exit 1;
 fi
 
+echo ""
 echo "- Setting the VPN IP address in the 'settings.json' file"
 OUT=$(sed -i -e "s/\(\"bind-address-ipv4\"\).*/\1: \"$IP_ADDRESS\",/" "${TRANSMISSION_CONFIG}")
 RET=$?
 
 [ $? -ne 0 ] && { echo "Error"; exit 2; }
 
+echo ""
 echo "- Starting transmission service"
 service transmission start
 
