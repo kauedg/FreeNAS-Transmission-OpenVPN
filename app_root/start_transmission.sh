@@ -25,10 +25,15 @@ if ! [ -f "${TRANSMISSION_CONFIG}" ]; then
 fi
 
 echo "- Setting the VPN IP address in the 'settings.json' file"
-sed -i -e "s/\(\"bind-address-ipv4\"\).*/\1: $IP_ADDRESS,/" "${TRANSMISSION_CONFIG}"
+OUT=$(sed -i -e "s/\(\"bind-address-ipv4\"\).*/\1: \"$IP_ADDRESS\",/" "${TRANSMISSION_CONFIG}")
+RET=$?
+
+# TODO: error check
 
 echo "- Starting transmission service"
 service transmission start
+
+# TODO: error check
 
 echo "----- End $0"
 
