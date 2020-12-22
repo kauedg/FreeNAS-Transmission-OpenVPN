@@ -137,9 +137,11 @@ while [ "$IP_ADDRESS" == "" ]; do
   sleep 1
 done
 
+echo " ${IP_ADDRESS}"
+
 echo "Removing default route"
 route del default
 
-echo " ${IP_ADDRESS}"
+echo "" > /etc/resolv.conf
 
 exit 0
