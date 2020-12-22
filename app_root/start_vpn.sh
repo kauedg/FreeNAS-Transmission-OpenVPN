@@ -137,6 +137,9 @@ while [ "$IP_ADDRESS" == "" ]; do
   sleep 1
 done
 
+echo "Removing default route"
+route del default
+
 echo " ${IP_ADDRESS}"
 
 exit 0
