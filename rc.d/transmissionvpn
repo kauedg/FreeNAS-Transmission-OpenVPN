@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# PROVIDE: transmissionvpn
+# REQUIRE: DAEMON transmission
+# KEYWORD: shutdown
+
 . /etc/rc.subr
 
 name="transmissionvpn"
