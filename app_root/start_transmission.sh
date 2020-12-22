@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/local/bin/bash
 
 TRANSMISSION_CONFIG=/usr/local/etc/transmission/home/settings.json
 
