@@ -36,8 +36,7 @@ install:
 		echo "Enter your OpenVPN password and press [ENTER]:" ; \
 		read PASSWORD ; \
 
-		sed -i -e "s/username/$USERNAME/" openvpn/credentials
-		sed -i -e "s/username/$PASSWORD/" openvpn/credentials
+		sed -i -e "s/username/$USERNAME/" -e "s/username/$PASSWORD/" openvpn/credentials
 
 	@clear
 	@echo -e "\nVPN service's username and password written to the 'openvpn/credentials' file."
