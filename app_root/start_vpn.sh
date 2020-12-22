@@ -84,9 +84,15 @@ fi
 echo "PID directory: ${PID_DIR}"
 
 if ! [ -f "${OPENVPN_CONF_FILE}" ]; then
-  echo "Missing ''${OPENVPN_CONF_FILE}'' file.";
-  exit 5;
+  echo "Getting a random recommended NordVPN server"
+
+  URL="https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22servers_groups%22:[15],%22servers_technologies%22:[5]}"
+  SERVER=$(curl -s $URL --globoff | jq '.[].hostname' | sort --random-sort | head -n 1)
+
+  wget "https://downloads.nordcdn.com/configs/files/ovpn_tcp/servers/${SERVER}" -O openvpn/openvpn.conf
 fi
+
+# remove nobind?
 
 if ! [ -f "${BASE_DIR}/openvpn/credentials" ]; then
   echo "Missing OpenVPN credentials file: '${BASE_DIR}/openvpn/credentials'";

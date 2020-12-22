@@ -17,6 +17,7 @@ while [ "$IP_ADDRESS" == "" ]; do
   sleep 1
 done
 
+echo "  > ${IP_ADDRESS}"
 echo ""
 
 if ! [ -f "${TRANSMISSION_CONFIG}" ]; then
@@ -28,12 +29,12 @@ echo "- Setting the VPN IP address in the 'settings.json' file"
 OUT=$(sed -i -e "s/\(\"bind-address-ipv4\"\).*/\1: \"$IP_ADDRESS\",/" "${TRANSMISSION_CONFIG}")
 RET=$?
 
-# TODO: error check
+[ $? -ne 0 ] && { echo "Error"; exit 2; }
 
 echo "- Starting transmission service"
 service transmission start
 
-# TODO: error check
+[ $? -ne 0 ] && { echo "Error"; exit 3; }
 
 echo "----- End $0"
 
