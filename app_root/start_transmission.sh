@@ -9,7 +9,7 @@ echo "----- Begin $0"
 
 TUN_DEV=$1
 
-echo -n "- Waiting for ${TUN_DEV} IP address lease"
+echo "- Waiting for ${TUN_DEV} IP address lease"
 IP_ADDRESS=""
 while [ "$IP_ADDRESS" == "" ]; do
   IP_ADDRESS=$(ifconfig ${TUN_DEV} inet | sed -nr 's/.*inet ([0-9\.]+).*/\1/p')

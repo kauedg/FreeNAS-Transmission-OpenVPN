@@ -16,12 +16,5 @@ transmissionvpn_start()
     /opt/transmissionvpn/start_vpn.sh
 }
 
-transmissionvpn_stop()
-{
-    service transmission onestop
-    #/opt/transmissionvpn/stop_vpn.sh
-}
-
-
 load_rc_config $name
 run_rc_command "$1"

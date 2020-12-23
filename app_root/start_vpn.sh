@@ -108,7 +108,7 @@ OUT=$(/usr/local/sbin/openvpn \
   --cd "${BASE_DIR}" \
   --config openvpn/openvpn.conf \
   --up "start_transmission.sh ${TUN_DEV}" \
-  --down "stop_transmission.sh" \
+  --down "service transmission onestop" \
   --script-security 2 \
   --log-append "${LOG_DIR}/openvpn.log" \
   --writepid "${PID_DIR}/openvpn.pid" \
