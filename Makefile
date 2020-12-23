@@ -33,13 +33,13 @@ install:
 	@clear
 	@echo "Enter your OpenVPN username and press [ENTER]:" ; \
 	read USERNAME ; \
-	sed -i'' -e "s/username/$$USERNAME/" /opt/transmissionvpn/openvpn/credentials
+	sed -i"" -e "s/username/$$USERNAME/" /opt/transmissionvpn/openvpn/credentials
 
 	@printf "Enter your OpenVPN password and press [ENTER]: \n"; \
 	stty -echo; \
 	read PASSWORD; \
 	stty echo; \
-	sed -i'' -e "s/password/$$PASSWORD/" /opt/transmissionvpn/openvpn/credentials
+	sed -i"" -e "s/password/$$PASSWORD/" /opt/transmissionvpn/openvpn/credentials
 
 	@clear
 	@echo -e "\nVPN service's username and password written to the '/opt/transmissionvpn/openvpn/credentials' file."

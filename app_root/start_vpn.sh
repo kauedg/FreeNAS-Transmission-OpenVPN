@@ -100,19 +100,19 @@ fi
 echo ""
 echo "====== OpenVPN start ======"
 echo -n "- Starting OpenVPN client... "
-OPENVPN=$(which openvpn)
 OUT=$(/usr/local/sbin/openvpn \
   --dev ${TUN_DEV} \
   --daemon openvpn \
   --cd "${BASE_DIR}" \
   --config openvpn/openvpn.conf \
-  --up "start_transmission.sh ${TUN_DEV}" \
-  --down "service transmission onestop" \
+  --up "start_transmission.sh" \
+  --down "/usr/sbin/service transmission onestop" \
   --script-security 2 \
   --log-append "${LOG_DIR}/openvpn.log" \
   --writepid "${PID_DIR}/openvpn.pid" \
   --auth-user-pass openvpn/credentials \
-  --auth-nocache)
+  --auth-nocache \
+  --allow-pull-fqdn)
 
 RET=$?
 
