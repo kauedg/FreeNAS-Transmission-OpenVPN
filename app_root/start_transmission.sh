@@ -33,7 +33,7 @@ RET=$?
 
 echo ""
 echo "- Starting transmission service"
-service transmission start
+service transmission onestart
 
 [ $? -ne 0 ] && { echo "Error"; exit 3; }
 

@@ -1,6 +1,11 @@
 
 default: all
 
+uninstall:
+        rm -rf /opt/transmissionvpn
+        rm -rf /usr/local/etc/rc.d/transmissionvpn
+        sed -i'' -e "/transmissionvpn.*/d" /etc/rc.conf
+
 all: requirements install
 
 requirements:
@@ -18,11 +23,6 @@ install:
 
 	cp ./rc.d/transmissionvpn /usr/local/etc/rc.d/transmissionvpn
 	chmod +x /usr/local/etc/rc.d/transmissionvpn
-
-	# Make sure 'transmission' service is enabled
-	grep -q 'transmission_enable=' /etc/rc.conf \
-	        && (sed -i -e 's/^transmission_enable.*/transmission_enable=\"YES\"/' /etc/rc.conf) \
-	        || (echo 'transmission_enable="YES"' >> /etc/rc.conf)
 
 	# Make sure 'transmissionvpn' service is enabled
 	grep -q 'transmissionvpn_enable=' /etc/rc.conf \
