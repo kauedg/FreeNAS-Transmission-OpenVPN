@@ -24,8 +24,6 @@ else
   echo "- No OpenVPN processes running"
 fi
 
-echo ""
-
 # Remove existing tun devices
 TUN_COUNT=$(printf '%s\n' $(ifconfig -l) | grep tun* -c)
 if [ $TUN_COUNT -ne 0 ]; then
@@ -99,6 +97,7 @@ if ! [ -f "${BASE_DIR}/openvpn/credentials" ]; then
   exit 6;
 fi
 
+echo ""
 echo "====== OpenVPN start ======"
 echo -n "- Starting OpenVPN client... "
 OPENVPN=$(which openvpn)
@@ -112,7 +111,8 @@ OUT=$(/usr/local/sbin/openvpn \
   --script-security 2 \
   --log-append "${LOG_DIR}/openvpn.log" \
   --writepid "${PID_DIR}/openvpn.pid" \
-  --auth-user-pass openvpn/credentials)
+  --auth-user-pass openvpn/credentials \
+  --auth-nocache)
 
 RET=$?
 
@@ -139,8 +139,10 @@ done
 
 echo " ${IP_ADDRESS}"
 
-echo "Removing default route"
-route del default
+# This is a workaround, OpenVPN is not being able to change the default gateway
+# to the tun's gateway
+echo "- Changing default route"
+route del default > /dev/null
 
 echo "" > /etc/resolv.conf
 

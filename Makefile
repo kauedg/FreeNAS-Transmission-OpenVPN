@@ -20,6 +20,7 @@ install:
 
 	cp -r ./app_root/* /opt/transmissionvpn
 	chmod +x /opt/transmissionvpn/*.sh
+	chown 600 /opt/transmissionvpn/openvpn/credentials
 
 	cp ./rc.d/transmissionvpn /usr/local/etc/rc.d/transmissionvpn
 	chmod +x /usr/local/etc/rc.d/transmissionvpn
