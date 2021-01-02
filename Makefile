@@ -4,6 +4,7 @@ default: all
 uninstall:
 	rm -rf /opt/transmissionvpn
 	rm -rf /usr/local/etc/rc.d/transmissionvpn
+	rm -rf /var/log/transmissionvpn
 	sed -i'' -e "/transmissionvpn.*/d" /etc/rc.conf
 
 all: requirements install
