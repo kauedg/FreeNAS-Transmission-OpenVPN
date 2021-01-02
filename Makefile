@@ -32,17 +32,17 @@ install:
 	        || (echo 'transmissionvpn_enable="YES"' >> /etc/rc.conf)
 
 	@clear
-  @echo "Enter your OpenVPN username and press [ENTER]:" ; \
-  read USERNAME ; \
-  echo $$USERNAME > /opt/transmissionvpn/openvpn/credentials
+	@echo "Enter your OpenVPN username and press [ENTER]:" ; \
+	read USERNAME ; \
+	echo $$USERNAME > /opt/transmissionvpn/openvpn/credentials
 
-  @printf "Enter your OpenVPN password and press [ENTER]: \n"; \
-  stty -echo; \
-  read PASSWORD; \
-  stty echo; \
-  echo $$PASSWORD >> /opt/transmissionvpn/openvpn/credentials
+	@printf "Enter your OpenVPN password and press [ENTER]: \n"; \
+	stty -echo; \
+	read PASSWORD; \
+	stty echo; \
+	echo $$PASSWORD >> /opt/transmissionvpn/openvpn/credentials
 
-  chmod 600 /opt/transmissionvpn/openvpn/credentials
+	chmod 600 /opt/transmissionvpn/openvpn/credentials
 
 	@clear
 	@echo -e "\nVPN service's username and password written to the '/opt/transmissionvpn/openvpn/credentials' file."

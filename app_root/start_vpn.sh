@@ -11,7 +11,7 @@ echo "- Stopping transmission service."
 service transmission onestatus && service transmission onestop
 
 echo "- Killing running OpenVPN processe(s)... "
-ps -xc -o command | grep -i openvpn -c && killall -TERM openvpn
+ps -xc -o command | grep -i openvpn -c >/dev/null && killall -TERM openvpn
 
 echo ""
 echo "====== TUN Interface ======"
@@ -73,7 +73,7 @@ OUT=$(/usr/local/sbin/openvpn \
   --dev ${TUN_DEV} \
   --daemon openvpn \
   --up "start_transmission.sh" \
-  --down "/usr/sbin/service transmission onestop" \
+  --down "stop_transmission.sh" \
   --script-security 2 \
   --log "${LOG_DIR}/openvpn.log" \
   --writepid "${PID_DIR}/openvpn.pid" \
