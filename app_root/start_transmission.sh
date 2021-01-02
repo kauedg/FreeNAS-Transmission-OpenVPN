@@ -17,8 +17,6 @@ TRANSMISSION_CONFIG=/usr/local/etc/transmission/home/settings.json
 # This script's output will be written to the "openvpn.log" file
 echo "----- Begin $0"
 
-/sbin/resolvconf -u
-
 echo "- IP Address: ${IP_ADDRESS}"
 
 if ! [ -f "${TRANSMISSION_CONFIG}" ]; then

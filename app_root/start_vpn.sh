@@ -25,26 +25,26 @@ else
 fi
 
 # Remove existing tun devices
-TUN_COUNT=$(printf '%s\n' $(ifconfig -l) | grep tun* -c)
-if [ $TUN_COUNT -ne 0 ]; then
-  echo "- Removig $TUN_COUNT TUN interface(s)"
-
-  for IFACE_NAME in $(printf '%s\n' $(ifconfig -l) | grep tun* ); do
-    OUT=$(ifconfig "$IFACE_NAME" destroy)
-    RET=$?
-
-    if [ $RET -ne 0 ]; then
-      echo -e "\n[Error]"
-      echo "  [!] Return code: $RET"
-      echo "  [!] Message: $OUT"
-      exit 3
-    fi
-
-    echo "  > Removed [${IFACE_NAME}]"
-  done
-else
-  echo "- No TUN interfaces found"
-fi
+# TUN_COUNT=$(printf '%s\n' $(ifconfig -l) | grep tun* -c)
+# if [ $TUN_COUNT -ne 0 ]; then
+#   echo "- Removig $TUN_COUNT TUN interface(s)"
+#
+#   for IFACE_NAME in $(printf '%s\n' $(ifconfig -l) | grep tun* ); do
+#     OUT=$(ifconfig "$IFACE_NAME" destroy)
+#     RET=$?
+#
+#     if [ $RET -ne 0 ]; then
+#       echo -e "\n[Error]"
+#       echo "  [!] Return code: $RET"
+#       echo "  [!] Message: $OUT"
+#       exit 3
+#     fi
+#
+#     echo "  > Removed [${IFACE_NAME}]"
+#   done
+# else
+#   echo "- No TUN interfaces found"
+# fi
 
 echo ""
 echo "====== TUN Interface ======"
@@ -111,8 +111,7 @@ OUT=$(/usr/local/sbin/openvpn \
   --log-append "${LOG_DIR}/openvpn.log" \
   --writepid "${PID_DIR}/openvpn.pid" \
   --auth-user-pass openvpn/credentials \
-  --auth-nocache \
-  --allow-pull-fqdn)
+  --auth-nocache)
 
 RET=$?
 
@@ -141,9 +140,8 @@ echo " ${IP_ADDRESS}"
 
 # This is a workaround, OpenVPN is not being able to change the default gateway
 # to the tun's gateway
-echo "- Changing default route"
-route del default > /dev/null
-
-echo "" > /etc/resolv.conf
+#echo "- Changing default route"
+#route del default > /dev/null
+#echo "" > /etc/resolv.conf
 
 exit 0
