@@ -6,45 +6,12 @@ PID_DIR="/var/run/transmissionvpn"
 OPENVPN_CONF_FILE="${BASE_DIR}/openvpn/openvpn.conf"
 
 echo "====== Environment cleanup ======"
-OPENVPN_COUNT=$(ps -xc -o command | grep -i openvpn -c)
-if [ $OPENVPN_COUNT -ne 0 ]; then
-  echo -n "- Killing $OPENVPN_COUNT OpenVPN processe(s) "
-  OUT=$(pkill openvpn)
-  RET=$?
 
-  if [ $RET -ne 0 ]; then
-    echo -e "\n[Error]"
-    echo "  [!] Return code: $RET"
-    echo "  [!] Message: $OUT"
-    exit 1
-  fi
+echo "- Stopping transmission service."
+service transmission onestatus && service transmission onestop
 
-  echo "[ok]"
-else
-  echo "- No OpenVPN processes running"
-fi
-
-# Remove existing tun devices
-# TUN_COUNT=$(printf '%s\n' $(ifconfig -l) | grep tun* -c)
-# if [ $TUN_COUNT -ne 0 ]; then
-#   echo "- Removig $TUN_COUNT TUN interface(s)"
-#
-#   for IFACE_NAME in $(printf '%s\n' $(ifconfig -l) | grep tun* ); do
-#     OUT=$(ifconfig "$IFACE_NAME" destroy)
-#     RET=$?
-#
-#     if [ $RET -ne 0 ]; then
-#       echo -e "\n[Error]"
-#       echo "  [!] Return code: $RET"
-#       echo "  [!] Message: $OUT"
-#       exit 3
-#     fi
-#
-#     echo "  > Removed [${IFACE_NAME}]"
-#   done
-# else
-#   echo "- No TUN interfaces found"
-# fi
+echo "- Killing running OpenVPN processe(s)... "
+ps -xc -o command | grep -i openvpn -c && killall -TERM openvpn
 
 echo ""
 echo "====== TUN Interface ======"
@@ -101,17 +68,18 @@ echo ""
 echo "====== OpenVPN start ======"
 echo -n "- Starting OpenVPN client... "
 OUT=$(/usr/local/sbin/openvpn \
-  --dev ${TUN_DEV} \
-  --daemon openvpn \
   --cd "${BASE_DIR}" \
   --config openvpn/openvpn.conf \
+  --dev ${TUN_DEV} \
+  --daemon openvpn \
   --up "start_transmission.sh" \
   --down "/usr/sbin/service transmission onestop" \
   --script-security 2 \
-  --log-append "${LOG_DIR}/openvpn.log" \
+  --log "${LOG_DIR}/openvpn.log" \
   --writepid "${PID_DIR}/openvpn.pid" \
   --auth-user-pass openvpn/credentials \
-  --auth-nocache)
+  --auth-nocache \
+  --verb 4)
 
 RET=$?
 

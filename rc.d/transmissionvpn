@@ -12,14 +12,12 @@ stop_cmd="${name}_stop"
 
 transmissionvpn_start()
 {
-    service transmission onestop
     /opt/transmissionvpn/start_vpn.sh
 }
 
 transmissionvpn_stop()
 {
-    service transmission onestop
-    pkill openvpn
+    /opt/transmissionvpn/stop_vpn.sh
 }
 
 load_rc_config $name
