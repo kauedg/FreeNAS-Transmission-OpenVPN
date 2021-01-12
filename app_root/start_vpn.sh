@@ -67,19 +67,19 @@ fi
 echo ""
 echo "====== OpenVPN start ======"
 echo -n "- Starting OpenVPN client... "
-OUT=$(/usr/local/sbin/openvpn \
-  --cd "${BASE_DIR}" \
-  --config openvpn/openvpn.conf \
-  --dev ${TUN_DEV} \
-  --daemon openvpn \
-  --up "start_transmission.sh" \
-  --down "stop_transmission.sh" \
-  --script-security 2 \
-  --log "${LOG_DIR}/openvpn.log" \
-  --writepid "${PID_DIR}/openvpn.pid" \
-  --auth-user-pass openvpn/credentials \
-  --auth-nocache \
-  --verb 4)
+# OUT=$(/usr/local/sbin/openvpn \
+#   --cd "${BASE_DIR}" \
+#   #--config openvpn/openvpn.conf \
+#   #--dev ${TUN_DEV} \
+#   #--daemon openvpn \
+#   --up "start_transmission.sh" \
+#   --down "stop_transmission.sh" \
+#   --script-security 2 \
+#   #--log "${LOG_DIR}/openvpn.log" \
+#   #--writepid "${PID_DIR}/openvpn.pid" \
+#   --auth-user-pass openvpn/credentials \
+#   --auth-nocache \
+#   --verb 4)
 
 RET=$?
 
