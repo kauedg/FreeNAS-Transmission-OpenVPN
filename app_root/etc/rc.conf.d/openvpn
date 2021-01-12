@@ -1,6 +1,4 @@
 openvpn_enable="YES"
-
-# openvpn_configfile=/usr/local/etc/openvpn/openvpn.conf
-# openvpn_dir=/usr/local/etc/openvpn
-
-openvpn_if=tun0
+openvpn_dir=/usr/local/etc/openvpn
+openvpn_configfile=/usr/local/etc/openvpn/client.conf
+openvpn_if=tun
