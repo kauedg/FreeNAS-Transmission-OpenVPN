@@ -42,6 +42,17 @@ name="${name:-openvpn}" ;
 name="${name##*/}"
 rcvar=${name}_enable
 
+# reload: support SIGHUP to reparse configuration file
+# softrestart: support SIGUSR1 to reconnect without superuser privileges
+# stats: support SIGUSR2 to write statistics to the syslog
+extra_commands="reload softrestart stats"
+softrestart_cmd="softrestart"
+stats_cmd="openvpn_stats"
+start_precmd="openvpn_prestart"
+
+# run this last
+stop_postcmd="stop_postcmd"
+
 stop_postcmd()
 {
   rm -f "$pidfile" || warn "Could not remove $pidfile."
@@ -59,21 +70,20 @@ openvpn_stats()
   run_rc_command ${rc_prefix}reload $rc_extra_args
 }
 
-# reload: support SIGHUP to reparse configuration file
-# softrestart: support SIGUSR1 to reconnect without superuser privileges
-# stats: support SIGUSR2 to write statistics to the syslog
-extra_commands="reload softrestart stats"
-softrestart_cmd="softrestart"
-stats_cmd="openvpn_stats"
+openvpn_prestart()
+{
+  ifconfig tun2 > /dev/null 2>&1 && ifconfig tun2 destroy;
+  [ -e /dev/tun2 ] && rm -rf /dev/tun2;
+  ifconfig tun2 create > /dev/null 2>&1;
+
+  return 0
+}
 
 # pidfile
 pidfile="/var/run/${name}.pid"
 
 # command and arguments
 command="/usr/local/sbin/openvpn"
-
-# run this last
-stop_postcmd="stop_postcmd"
 
 load_rc_config ${name}
 
@@ -92,6 +102,6 @@ done
 
 required_files=${configfile}
 
-command_args="--cd ${dir} --daemon ${name} --writepid ${pidfile} --config ${configfile}"
+command_args="--cd ${dir} --daemon ${name} --writepid ${pidfile} --config ${configfile} --config /usr/local/etc/openvpn/override.conf"
 
 run_rc_command "$1"

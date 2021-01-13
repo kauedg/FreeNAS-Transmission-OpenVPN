@@ -5,7 +5,6 @@ uninstall:
 	rm -rf /usr/local/etc/openvpn
 	rm -rf /etc/rc.conf.d/openvpn
 	rm -rf /usr/local/etc/rc.d/openvpn
-	#rm -rf /usr/local/etc/rc.d/transmissionvpn
 	#sed -i'' -e "/transmissionvpn.*/d" /etc/rc.conf
 
 all: requirements install
@@ -22,17 +21,6 @@ install:
 	cp -R ./app_root/* /
 	chmod +x /usr/local/etc/rc.d/openvpn
 	chmod +x /usr/local/etc/openvpn/scripts/*.sh
-
-	# Make sure 'transmissionvpn' service is enabled
-	# grep -q 'transmissionvpn_enable=' /etc/rc.conf \
-	#         && (sed -i -e 's/^transmissionvpn_enable.*/transmissionvpn_enable=\"YES\"/' /etc/rc.conf) \
-	#         || (echo 'transmissionvpn_enable="YES"' >> /etc/rc.conf)
-
-	URL="https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations"
-	SERVER=$(/usr/local/bin/curl -s "$URL" --globoff | /usr/local/bin/jq -r '.[].hostname' | sort --random-sort | head -n 1)
-	SERVER_FILE="https://downloads.nordcdn.com/configs/files/ovpn_tcp/servers/${SERVER}.tcp.ovpn"
-
-	/usr/local/bin/wget -q "${SERVER_FILE}" -O "/usr/local/etc/openvpn/client.conf"
 
 	@clear
 	@echo "Enter your OpenVPN username and press [ENTER]:" ; \
