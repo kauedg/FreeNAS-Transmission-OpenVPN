@@ -1,12 +1,18 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env bash
 
+cd scripts
+
+TRANSMISSION_HOME="/usr/local/etc/transmission/home"
+
+echo "======== basename $0 "
+echo "Disabling all current resolvconf interfaces configurations"
+rm -rf /var/run/resolvconf/interfaces/*
+
+echo "Creating the resolvconf configuration for the VPN"
+. ./update-resolv-conf.sh
+
+echo "Configuring the bind address for Transmission"
+sed -I "" "s/\(\"bind-address-ipv4\": \).*/\1\""$ifconfig_local"\",/g" "${TRANSMISSION_HOME}/settings.json"
+
+service transmission start
 echo "========================================="
-echo $0
-echo "========================================="
-env
-echo "========================================="
-# echo "Getting a random recommended NordVPN server"
-#
-# URL="https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations"
-# SERVER=$(/usr/local/bin/curl -s "$URL" --globoff | /usr/local/bin/jq -r '.[].hostname' | sort --random-sort | head -n 1)
-# /usr/local/bin/wget -q "https://downloads.nordcdn.com/configs/files/ovpn_tcp/servers/${SERVER}.tcp.ovpn" -O "${BASE_DIR}/openvpn/openvpn.conf"
