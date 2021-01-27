@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 #
+# FROM
+# https://raw.githubusercontent.com/alfredopalhares/openvpn-update-resolv-conf/master/update-resolv-conf.sh
+#
+#
 # Parses DHCP options from openvpn to update resolv.conf
 # To use set as 'up' and 'down' script in your openvpn *.conf:
 # up /etc/openvpn/update-resolv-conf
