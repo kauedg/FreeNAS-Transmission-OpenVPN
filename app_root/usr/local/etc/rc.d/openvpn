@@ -72,9 +72,12 @@ openvpn_stats()
 
 openvpn_prestart()
 {
-  ifconfig tun2 > /dev/null 2>&1 && ifconfig tun2 destroy;
-  [ -e /dev/tun2 ] && rm -rf /dev/tun2;
-  ifconfig tun2 create > /dev/null 2>&1;
+  # Getting a random recommended NordVPN server
+  URL="https://api.nordvpn.com/server"
+  SERVER=$(/usr/local/bin/curl -s "$URL" | /usr/local/bin/jq -r '.[] | select(.search_keywords | index("P2P")) | .domain' | sort -R | head -n1)
+  SERVER_FILE="https://downloads.nordcdn.com/configs/files/ovpn_udp/servers/${SERVER}.udp.ovpn"
+  echo "Chosen: ${SERVER_FILE}"
+  /usr/local/bin/curl -s "${SERVER_FILE}" -o "/usr/local/etc/openvpn/client.conf"
 
   return 0
 }
