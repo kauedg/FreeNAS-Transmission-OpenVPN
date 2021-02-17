@@ -79,6 +79,12 @@ openvpn_prestart()
   echo "Chosen: ${SERVER_FILE}"
   /usr/local/bin/curl -s "${SERVER_FILE}" -o "/usr/local/etc/openvpn/client.conf"
 
+  # Getting a random recommended NordVPN server
+
+  URL="https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations"
+  SERVER=$(/usr/local/bin/curl -s "$URL" --globoff | /usr/local/bin/jq -r '.[].hostname' | sort --random-sort | head -n 1)
+  /usr/local/bin/wget -q "https://downloads.nordcdn.com/configs/files/ovpn_tcp/servers/${SERVER}.tcp.ovpn" -O "/usr/local/etc/openvpn/client.conf"
+
   return 0
 }
 
